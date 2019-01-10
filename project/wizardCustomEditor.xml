@@ -1,0 +1,18 @@
+    <editor>
+	<help>/commander/pages/@PLUGIN_NAME@/EC-QTP_help?s=Administration&amp;ss=Plugins#runQTP</help>
+       <label>Invoke QuickTest Pro Test</label>
+        <formElement>
+            <type>entry</type>
+            <label>Test Path</label>
+            <property>testPath</property>
+            <required>1</required>
+            <documentation>Indicate the path where the test is saved.</documentation>
+        </formElement>         
+        <formElement>
+            <type>entry</type>
+            <label>Result Path</label>
+            <property>resultPath</property>
+            <required>1</required>
+            <documentation>Indicate the directory where test results will be saved.</documentation>
+        </formElement>
+    </editor>

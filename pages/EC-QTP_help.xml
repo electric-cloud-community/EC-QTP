@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 25 March 2009), see www.w3.org" />
+  <meta content="text/html; charset=us-ascii" http-equiv=
+  "content-type" />
+
+  <title>ElectricFlow Plugin for @PLUGIN_KEY@</title>
+  <link rel="stylesheet" href=
+  "../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css"
+  media="screen" />
+</head>
+
+<body>
+  <div class="help">
+    <h1>HP QuickTest Pro</h1>
+
+    <p>Plugin Version @PLUGIN_VERSION@</p>
+    <hr style=
+    "margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
+    noshade="noshade" />
+    <!-- The tool description should answer these kinds of questions:
+    What is the tool itself is used for in the development
+    process? Who would use this tool? What is the general use-case or
+    problem that this tool solves? Look at the tool's documentation or
+    website(s) to get their own descriptions. Look at Wikipedia or other
+    outside websites. If there is a Hudson plugin, read their
+    documentation for ideas, examples, etc. It's OK to copy word-for-word
+    only if appropriate, such as FOSS - but not commercial software.
+    -->
+
+	<p>July 1, 2015</p>
+	
+    <p>HP QuickTest Professional software provides functional and
+    regression test automation for software applications and
+    environments. Part of the HP Quality Center tool suite, HP
+    QuickTest Professional can be used for enterprise quality
+    assurance. HP QuickTest Professional supports keyword and
+    scripting interfaces and features a graphical user interface.
+    It uses the Visual Basic Scripting Edition (VBScript) scripting
+    language to specify a test procedure, and to manipulate the
+    objects and controls of the application under test.</p>
+
+    <h2>HP QuickTest Pro Links</h2>
+
+    <p>More information can be found at <a href=
+    "http://goo.gl/ZZnwo">this website</a>.</p>
+
+    <h2>ElectricFlow Integration to HP QuickTest Pro</h2>
+    <!-- The integration description should answer the questions:
+    How deep does our integration go? Why should I care? What general
+    functionality does the plugin include? What functionality does
+    the plugin omit?
+    -->
+
+    <p>The EC-QTP plugin enables you to run tests on QuickTest Pro
+    Server. The plugin also reads the results of the tests and
+    displays on the job summary</p>
+
+    <h2>Notes</h2>
+
+    <ul>
+      <li>Access to the machine where QuickTest Pro is installed is
+      required to use the plugin. All code is executed on the
+      ElectricFlow server machine using an agent. The QTP API
+      is available only on the machine where QTP is installed.</li>
+    </ul>
+
+    <h2>Integrated Version</h2>
+
+    <p>This plugin was developed and tested against version
+    11.0</p>
+
+    <h1>Plugin Procedures</h1>
+
+    <p>IMPORTANT: For all parameter descriptions below, required
+    parameters are shown in <span class='required'>bold
+    italics</span>.</p>
+
+    <div id="runQTP"><a name='runQTP' id="runQTP"></a>
+
+    <h3>Run QTP</h3>
+
+    <p>Runs Test from a TestPath and reads the results.</p>
+
+    <p>Specifying the same root for the test path and test results
+    fields is a unsupported action from QTP.</p>
+
+    <table class="grid">
+      <thead>
+        <tr>
+          <th>Parameter</th>
+
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class='required'>Test Path</td>
+
+          <td>Indicate the path where the test is
+          saved.(Required)</td>
+        </tr>
+
+        <tr>
+          <td class='required'>Result Path</td>
+
+          <td>Indicate the directory where test results will be
+          saved.(Required)</td>
+        </tr>
+      </tbody>
+    </table><img src="../../plugins/@PLUGIN_KEY@/img/QTP-1.png"
+    alt="" /></div>
+
+    <h1>Examples and Use Cases</h1>
+    <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
+    Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+    values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+    outline used above where possible.
+    -->
+
+    <h2>Run QTP Log Example</h2><img src=
+    "../../plugins/@PLUGIN_KEY@/img/QTP-2.png" alt="" />
+
+    <h2>Run QTP Job Details</h2><img src=
+    "../../plugins/@PLUGIN_KEY@/img/QTP-3.png" alt="" />
+
+    <h1>Release Notes</h1>
+	
+	<h2>@PLUGIN_KEY@ 2.0.7</h2>
+	<ul>
+		<li>Renamed ElectricCommander to ElectricFlow.</li>
+	</ul> 
+	
+	<h2>@PLUGIN_KEY@ 2.0.6</h2>
+	<ul>
+		<li>Procedure name(s) were changed in the step picker section</li>
+	</ul> 
+	
+    <h2>@PLUGIN_KEY@ 2.0.5</h2>
+    <!-- Specific descriptions of additional or changed functionality,
+    new parameters, etc. The plugin version header of this section should
+    include the speciic build number if possible. Repeat this section for
+    each version.
+    -->
+    <!--@PLUGIN_KEY@-2.0.5.0-->
+
+    <ul>
+      <li>Change Help page style</li>
+    </ul>
+
+    <h2>@PLUGIN_KEY@ 2.0.4</h2>
+
+    <ul>
+      <li>Applied new help page template</li>
+
+      <li>Added detailed Use Cases</li>
+
+      <li>Add XML parameters panel for all procedures</li>
+    </ul>
+  </div>
+</body>
+</html>

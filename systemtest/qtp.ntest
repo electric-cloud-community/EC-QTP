@@ -1,0 +1,246 @@
+# -*-Perl-*-
+
+# qtp.ntest -
+#
+# Exercise basic components of EC-QTP plugin
+#
+# Copyright (c) 2005-2011 Electric Cloud, Inc.
+# All rights reserved
+
+use strict;
+use warnings;
+use ECTest;
+
+# read in setup and tests that are common to all EC-Selenium plugin archives
+# system tests
+require "$::gTestFileDir/qtp-common.ntest";
+
+$::gProjectImported = 0;
+
+sub importProject() {
+    assertOK($::N->import(
+             { file =>"$::gTestFileDir/qtp-systemTests.xml",
+               path  => "/projects/qtp-systemTests",
+               force => 1
+             } ), "import qtp-systemTests project");
+    assertOK($::N->getProcedure("qtp-systemTests", "pathDoesNotExist"),"pathDoesNotExist procedure exists");
+    $::gProjectImported = 1;
+}
+
+sub doSetup() {
+
+    if(! $::gProjectImported) {
+        importProject();
+    }
+}
+
+ntest "check-runQTP-present", {}, sub {
+    # Check that the plugin contains required components
+    my $xpath = $::N->getSteps("$::gPlugin_name","runQTP");
+    assertOK($xpath,"get steps");
+    assertEq("runQTP", $xpath->findvalue("//step[1]/stepName"), "step 1: runQTP");
+    assertEq("extractInfo", $xpath->findvalue("//step[2]/stepName"), "step 2: extractInfo");
+};
+
+ntest "pathDoesNotExist", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("qtp-systemTests", 
+        { procedureName => "pathDoesNotExist",
+          pollInterval  => '1',
+          timeout       => 600,
+            actualParameter => [
+            {actualParameterName => 'resource', value => "$::gAgentResource"},
+            ]
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+    assertOK($xpath, "runProcedure finished");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+
+    # examine log files
+    $xpath = $::N->getJobDetails($jobId);
+
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace/winUNC");
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace/unix");
+    }
+
+    # Get the name of the log file for QTP - Link Defects
+    my $logFileName = $ws . "/"
+        . $xpath->findvalue("//jobStep[stepName='runQTP']/logFileName");
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+
+    writeFile("$::gCurrentTestDir/noDefaultProperty.log","====Job Details====\n$xpath->{_xml}\n====LOG====\n$data\n");
+
+    assertSubstring("Invalid class string", $data, "pathDoesNotExist output");
+};
+
+ntest "pathWithChineseCharacters", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("qtp-systemTests", 
+        { procedureName => "pathWithChineseCharacters",
+          pollInterval  => '1',
+          timeout       => 600,
+            actualParameter => [
+            {actualParameterName => 'resource', value => "$::gAgentResource"},
+            ]
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+    assertOK($xpath, "runProcedure finished");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+
+    # examine log files
+    $xpath = $::N->getJobDetails($jobId);
+
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace/winUNC");
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace/unix");
+    }
+
+    # Get the name of the log file for QTP - Link Defects
+    my $logFileName = $ws . "/"
+        . $xpath->findvalue("//jobStep[stepName='runQTP']/logFileName");
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+
+    writeFile("$::gCurrentTestDir/pathWithChineseCharacters.log","====Job Details====\n$xpath->{_xml}\n====LOG====\n$data\n");
+
+    assertSubstring("Test path 会意字 / 會意字", $data, "pathWithChineseCharacters output");
+};
+
+ntest "pathWithInvalidCharacters", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("qtp-systemTests", 
+        { procedureName => "pathWithInvalidCharacters",
+          pollInterval  => '1',
+          timeout       => 600,
+            actualParameter => [
+            {actualParameterName => 'resource', value => "$::gAgentResource"},
+            ]
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+    assertOK($xpath, "runProcedure finished");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+
+    # examine log files
+    $xpath = $::N->getJobDetails($jobId);
+
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace/winUNC");
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace/unix");
+    }
+
+    # Get the name of the log file for QTP - Link Defects
+    my $logFileName = $ws . "/"
+        . $xpath->findvalue("//jobStep[stepName='runQTP']/logFileName");
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+
+    writeFile("$::gCurrentTestDir/pathWithInvalidCharacters.log","====Job Details====\n$xpath->{_xml}\n====LOG====\n$data\n");
+
+    assertSubstring("Test path (-_ / \\ : .)", $data, "pathWithInvalidCharacters output");
+    assertSubstring("Result path (-_ / \\ : .)", $data, "pathWithInvalidCharacters2 output");
+};
+
+ntest "pathWithSpace", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("qtp-systemTests", 
+        { procedureName => "pathWithSpace",
+          pollInterval  => '1',
+          timeout       => 600,
+            actualParameter => [
+            {actualParameterName => 'resource', value => "$::gAgentResource"},
+            ]
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+    assertOK($xpath, "runProcedure finished");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+
+    # examine log files
+    $xpath = $::N->getJobDetails($jobId);
+
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace/winUNC");
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace/unix");
+    }
+
+    # Get the name of the log file for QTP - Link Defects
+    my $logFileName = $ws . "/"
+        . $xpath->findvalue("//jobStep[stepName='runQTP']/logFileName");
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+
+    writeFile("$::gCurrentTestDir/pathWithSpace.log","====Job Details====\n$xpath->{_xml}\n====LOG====\n$data\n");
+
+    assertSubstring("Test path C:/This Test/hello", $data, "pathWithSpace output");
+    assertSubstring("Result path C:/This Test/hello", $data, "pathWithSpace2 output");
+};
+
