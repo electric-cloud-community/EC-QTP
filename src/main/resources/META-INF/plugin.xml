@@ -5,6 +5,7 @@
     <label>@PLUGIN_KEY@</label>
     <description>Integration for HP Quick Test Pro</description>
     <category>Test</category>
+    <ecSupportLevel>10</ecSupportLevel>
     <author>Electric Cloud</author>
     <authorUrl>http://www.electric-cloud.com/support</authorUrl>
     <help>EC-QTP_help.xml</help>
