@@ -32,7 +32,7 @@
     only if appropriate, such as FOSS - but not commercial software.
     -->
 
-	<p>July 1, 2015</p>
+    <p>January 23, 2019</p>
 	
     <p>HP QuickTest Professional software provides functional and
     regression test automation for software applications and
@@ -131,6 +131,11 @@
 
     <h1>Release Notes</h1>
 	
+    <h2>@PLUGIN_KEY@ 2.0.8</h2>
+    <ul>
+        <li>The plugin icon has been updated.</li>
+    </ul>
+
 	<h2>@PLUGIN_KEY@ 2.0.7</h2>
 	<ul>
 		<li>Renamed ElectricCommander to ElectricFlow.</li>
